@@ -8,12 +8,26 @@ package routing;
 import core.Connection;
 import core.DTNHost;
 import core.Message;
+import core.Tuple;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author JarKom
  */
-public class RouteSocialSimilarity implements RoutingDecisionEngine{
+public class RouteSocialSimilarity implements RoutingDecisionEngine {
+
+    public static final String PUBSUB_NS = "DecisionEngineRouter";
+    public static final String ENGINE_SETTING = "decisionEngine";
+    public static final String TOMBSTONE_SETTING = "tombstones";
+    public static final String CONNECTION_STATE_SETTING = "";
+
+    protected boolean tombstoning;
+    protected RoutingDecisionEngine decider;
+    protected List<Tuple<Message, Connection>> outgoingMessages;
+
+    protected Set<String> tombstones;
 
     @Override
     public void connectionUp(DTNHost thisHost, DTNHost peer) {
@@ -47,11 +61,13 @@ public class RouteSocialSimilarity implements RoutingDecisionEngine{
 
     @Override
     public boolean shouldSendMessageToHost(Message m, DTNHost otherHost, DTNHost thisHost) {
-        
-        
-        
+
         return true;
-        
+    }
+
+    public double tanimotosimilarity(DTNHost thishost) {
+
+        return 0;
     }
 
     @Override
@@ -73,5 +89,5 @@ public class RouteSocialSimilarity implements RoutingDecisionEngine{
     public RoutingDecisionEngine replicate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
