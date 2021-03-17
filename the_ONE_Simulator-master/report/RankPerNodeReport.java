@@ -49,7 +49,7 @@ public class RankPerNodeReport extends Report {
                 String key = entry.getKey();
                 Integer value = entry.getValue();
                 if (nodeRank.containsKey(key)) {
-                    nodeRank.replace(key, nodeRank.get(key) + value);
+           //         nodeRank.replace(key, nodeRank.get(key) + value);
                 } else {
                     nodeRank.put(key, value);
                 }

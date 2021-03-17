@@ -6,7 +6,9 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import movement.MovementModel;
 import movement.Path;
@@ -34,7 +36,7 @@ public class DTNHost implements Comparable<DTNHost> {
     private List<MovementListener> movListeners;
     private List<NetworkInterface> net;
     private ModuleCommunicationBus comBus;
-    private List<Integer> nationality, languages,affiliation, country ;
+    private Integer nationality, languages,affiliation, country ;
     
         
     static {
@@ -63,10 +65,7 @@ public class DTNHost implements Comparable<DTNHost> {
         this.address = getNextAddress();
         this.name = groupId + address;
         this.net = new ArrayList<NetworkInterface>();
-        nationality = new ArrayList<Integer>();
-        languages = new ArrayList<Integer>();
-        affiliation =new ArrayList<Integer>();
-        country = new ArrayList<Integer>();
+        
         nationality = SocialFeature.setNationality(this.name);
         languages = SocialFeature.setLanguages(this.name);
         affiliation =SocialFeature.setAffiliation(this.name);
@@ -552,5 +551,16 @@ public class DTNHost implements Comparable<DTNHost> {
         cetak += country.toString()+ "\n";
         return cetak;
     }
+    
+    public List<Integer> getSocialFeature(){
+    List<Integer> sf = new  ArrayList<Integer>();
+    sf.add(this.nationality);
+    sf.add(this.languages);
+    sf.add(this.affiliation);
+    sf.add(this.country);
+    
+    return sf;
+    
+}
 
 }
