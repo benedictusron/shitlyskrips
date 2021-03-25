@@ -31,8 +31,7 @@ public class RouteSocialSimilarity implements RoutingDecisionEngine {
 
     @Override
     public void connectionUp(DTNHost thisHost, DTNHost peer) {
-        
-        
+
     }
 
     @Override
@@ -66,13 +65,10 @@ public class RouteSocialSimilarity implements RoutingDecisionEngine {
         return true;
     }
 
-    public double tanimotosimilarity(DTNHost thishost) {
-
-        return 0;
-    }
-
     @Override
     public boolean shouldDeleteSentMessage(Message m, DTNHost otherHost) {
+        
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -88,7 +84,48 @@ public class RouteSocialSimilarity implements RoutingDecisionEngine {
 
     @Override
     public RoutingDecisionEngine replicate() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public double hitungtanimoto(DTNHost host, DTNHost peer) {
+        List<Integer> x = host.getSocialFeature();
+        List<Integer> y = peer.getSocialFeature();
+
+//        Double sim = 0.0;
+        Double dotProduct = 0.0;
+        Double magnitudeA = 0.0;
+        Double magnitudeB = 0.0;
+
+        for (int i = 0; i < x.size(); i++) {
+//            sim += x.get(i)*y.get(i)/x.get(i)*x.get(i)+y.get(i)*y.get(i)+x.get(i)*y.get(i);
+            dotProduct += x.get(i) * y.get(i);
+            magnitudeA += x.get(i) * x.get(i);
+            magnitudeB += y.get(i) * y.get(i);
+        }
+
+        return ((double) dotProduct / (double) (magnitudeA + magnitudeB - dotProduct));
+    }
+    
+//      * @param features1 The first feature map
+//     * @param features2 The second feature map
+//     * @return The Tanimoto coefficient
+//     */                         
+//    public static float calculate(Map features1, Map features2) {
+//        Set common = new TreeSet(features1.keySet());
+//        common.retainAll(features2.keySet());
+//        double xy = 0., x = 0., y = 0.;
+//        for (String s : common) {
+//            int c1 = features1.get(s), c2 = features2.get(s);
+//            xy += c1 * c2;
+//        }
+//        for (Integer c : features1.values()) {
+//            x += c * c;
+//        }
+//        for (Integer c : features2.values()) {
+//            y += c * c;
+//        }
+//        return (float) (xy / (x + y - xy));
+//    }
+
+ 
 }

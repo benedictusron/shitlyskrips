@@ -209,7 +209,7 @@ public class DistributedBubbleRapCentrality implements RoutingDecisionEngine, Co
 		else if(de.getGlobalCentrality() > this.getGlobalCentrality())
 			return true;
 		
-		return false;
+		return false;  
 	}
 
 	public boolean shouldDeleteSentMessage(Message m, DTNHost otherHost)
