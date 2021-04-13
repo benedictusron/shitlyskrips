@@ -36,8 +36,8 @@ public class DTNHost implements Comparable<DTNHost> {
     private List<MovementListener> movListeners;
     private List<NetworkInterface> net;
     private ModuleCommunicationBus comBus;
-    private Integer nationality, languages,affiliation, country ;
-    
+    private Integer nationality, languages, affiliation, country;
+   
         
     static {
         DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -66,10 +66,13 @@ public class DTNHost implements Comparable<DTNHost> {
         this.name = groupId + address;
         this.net = new ArrayList<NetworkInterface>();
         
+        
         nationality = SocialFeature.setNationality(this.name);
         languages = SocialFeature.setLanguages(this.name);
         affiliation =SocialFeature.setAffiliation(this.name);
         country = SocialFeature.setCountry(this.name);
+        
+        
 
         for (NetworkInterface i : interf) {
             NetworkInterface ni = i.replicate();
@@ -97,6 +100,22 @@ public class DTNHost implements Comparable<DTNHost> {
                 l.initialLocation(this, this.location);
             }
         }
+    }
+
+    public Integer getNationality() {
+        return nationality;
+    }
+
+    public Integer getLanguages() {
+        return languages;
+    }
+
+    public Integer getAffiliation() {
+        return affiliation;
+    }
+
+    public Integer getCountry() {
+        return country;
     }
 
     /**
@@ -542,25 +561,25 @@ public class DTNHost implements Comparable<DTNHost> {
     public int compareTo(DTNHost h) {
         return this.getAddress() - h.getAddress();
     }
-    
+
     public String SocialFeaturePrint(){
         String cetak ="";
         cetak += nationality.toString()+ "\n";
         cetak += languages.toString()+ "\n";
         cetak += affiliation.toString()+ "\n";
         cetak += country.toString()+ "\n";
+        
         return cetak;
     }
     
     public List<Integer> getSocialFeature(){
-    List<Integer> sf = new  ArrayList<Integer>();
-    sf.add(this.nationality);
-    sf.add(this.languages);
-    sf.add(this.affiliation);
-    sf.add(this.country);
-    
-    return sf;
-    
-}
-
+        List<Integer> sf = new ArrayList<Integer>();
+        
+        sf.add(this.getNationality());
+        sf.add(this.getLanguages());
+        sf.add(this.getAffiliation());
+        sf.add(this.getCountry());
+        
+        return sf;
+    }
 }

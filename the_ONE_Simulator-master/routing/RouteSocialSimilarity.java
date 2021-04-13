@@ -29,10 +29,19 @@ public class RouteSocialSimilarity implements RoutingDecisionEngine {
 
     protected Set<String> tombstones;
 
+    
+    
     @Override
     public void connectionUp(DTNHost thisHost, DTNHost peer) {
-
-    }
+        if(thisHost.getNationality() == peer.getNationality()
+                || thisHost.getLanguages() == peer.getLanguages()
+                || thisHost.getAffiliation() == peer.getAffiliation()
+                || thisHost.getCountry() == peer.getCountry()){
+            
+            System.out.println("sama");}
+            
+            
+            }
 
     @Override
     public void connectionDown(DTNHost thisHost, DTNHost peer) {
@@ -106,10 +115,7 @@ public class RouteSocialSimilarity implements RoutingDecisionEngine {
         return ((double) dotProduct / (double) (magnitudeA + magnitudeB - dotProduct));
     }
     
-//      * @param features1 The first feature map
-//     * @param features2 The second feature map
-//     * @return The Tanimoto coefficient
-//     */                         
+
 //    public static float calculate(Map features1, Map features2) {
 //        Set common = new TreeSet(features1.keySet());
 //        common.retainAll(features2.keySet());
