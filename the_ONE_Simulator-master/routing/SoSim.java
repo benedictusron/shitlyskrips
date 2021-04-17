@@ -27,6 +27,7 @@ public class SoSim implements RoutingDecisionEngine {
     //untuk menyimpan node yang ditemui (yang diitungnya sekali)
     Set<DTNHost> nodeditemui = new HashSet<DTNHost>();
     List<Double> vektorawal = new ArrayList<Double>();
+    double tanimoto = 0;
 //    Map<DTNHost, List<Integer>> simpanAwal = new HashMap<DTNHost, List<Integer>>(); //Untuk menyimpan social feature yg ditemui
 //    Map<DTNHost, List<Double>> simpanSocialFeature = new HashMap<DTNHost, List<Double>>();
 
@@ -127,15 +128,35 @@ public class SoSim implements RoutingDecisionEngine {
 
     @Override
     public boolean shouldSendMessageToHost(Message m, DTNHost otherHost, DTNHost thisHost) {
-        if (SimClock.getIntTime() >= 28500) {
-            double tanimoto = hitungtanimoto(thisHost, otherHost);
 
-            System.out.println(thisHost + " >> " + otherHost);
-            System.out.println(tanimoto);
+        if (SimClock.getIntTime() >= 28500) { //setelah waktu warmup selesai
+
+            this.tanimoto = hitungtanimoto(thisHost, otherHost);
+            if (Double.isNaN(this.tanimoto)) { //jk hasil tanimoto NaN maka akan diberikan nilai 0
+                this.tanimoto = 0;
+            }
+            System.out.println(thisHost + " >> " + otherHost); //cek node yg mana yg ditemui 
+            System.out.println(this.tanimoto); // hasil tanimoto
         }
-        
-        
-        return true;
+
+        DecisionEngineRouter otherRouter = (DecisionEngineRouter) otherHost.getRouter();
+        SoSim otherSoSim = (SoSim) otherRouter.getDecisionEngine();
+
+        double ti = this.tanimoto; // memasukan nilai tanimoto ke ti(value)
+        if (m.getTo() == otherHost) { //jk yg ditemui adalah destinasi
+            return true; // pesan akan dikirim
+
+        } else if (ti < otherSoSim.getTanimoto()) { // jk value lebih kecil dri nilai sim node lain
+            this.tanimoto = otherSoSim.getTanimoto(); // maka akan memasukkan nilai tanimoto ke node lainnya
+
+            for (Message mes : otherHost.getMessageCollection()) {//baca pesan yg dibawa node lain
+                if (!mes.toString().equals(m)) { // jk tidak ditemukan pesan yg node pengirim bawa
+                    return true; // akan dikirim
+                }
+
+            }
+        }
+        return false;
     }
 
     @Override
@@ -170,9 +191,8 @@ public class SoSim implements RoutingDecisionEngine {
 
 //        List<Integer> x = host.getSocialFeature();
 //        List<Integer> y = peer.getSocialFeature();
-        
         BantuHitung bantu = new BantuHitung();
-        
+
 //        double sim = 0.0;
         double dotProduct = 0;
         double magnitudeA = 0;
@@ -181,7 +201,7 @@ public class SoSim implements RoutingDecisionEngine {
 //        System.out.println(x.size() + " " + y.size());
         if (!x.isEmpty() && !y.isEmpty()) {
 
-            for (int i = 0; i < x.size();i++) {
+            for (int i = 0; i < x.size(); i++) {
 //                sim += x.get(i) * y.get(i) / x.get(i) * x.get(i) + y.get(i) * y.get(i) - x.get(i) * y.get(i);
                 dotProduct += bantu.kali(x.get(i), y.get(i));
                 magnitudeA += bantu.kali(x.get(i), x.get(i));
@@ -220,6 +240,10 @@ public class SoSim implements RoutingDecisionEngine {
 //    }
     public List<Double> getVektorawal() {
         return vektorawal;
+    }
+
+    public double getTanimoto() {
+        return tanimoto;
     }
 
 }
