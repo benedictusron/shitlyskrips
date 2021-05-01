@@ -1,4 +1,3 @@
-
 /*
  * Bubble Rap (by Antok)
  */

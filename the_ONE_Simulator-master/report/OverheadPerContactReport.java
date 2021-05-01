@@ -1,4 +1,4 @@
-/*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -26,7 +26,7 @@ public class OverheadPerContactReport extends Report implements MessageListener,
     private int totalContact;
     private int nrofRelayed;
     private int nrofDelivered;
-    private Map<Integer, Double> nrofOverhead;
+    private Map<Integer, Double> nrofOverhead;  
 
     /**
      * Constructor
@@ -88,7 +88,7 @@ public class OverheadPerContactReport extends Report implements MessageListener,
     public void hostsConnected(DTNHost host1, DTNHost host2) {
         totalContact++;
         if (totalContact - lastRecord >= interval) {
-            lastRecord = totalContact;
+            lastRecord = totalContact;  
             double overHead = Double.NaN;	// overhead ratio
 
             if (this.nrofDelivered > 0) {
