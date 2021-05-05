@@ -81,10 +81,10 @@ public class SoSim implements RoutingDecisionEngine {
             if (!nodeditemui.isEmpty()) {
                 vektornationality = bantu.pembagi(nationality, nodeditemui.size());
                 vektorlanguage = bantu.pembagi(language, nodeditemui.size());
-                System.out.println(affiliation + "/" + nodeditemui.size()); // untuk cek hasilnya (yg dibagi 2)
-                System.out.println(bantu.pembagi(affiliation, nodeditemui.size()));
                 vektoraffiliation = bantu.pembagi(affiliation, nodeditemui.size());
                 vektorcountry = bantu.pembagi(country, nodeditemui.size());
+//              System.out.println(affiliation + "/" + nodeditemui.size()); // untuk cek hasilnya (yg dibagi 2)
+//              System.out.println(bantu.pembagi(affiliation, nodeditemui.size()));
             }
             //memasukkan nilai vektor msg2 sf pada vektor awal 
             vektorawal.add(vektornationality);
@@ -117,7 +117,6 @@ public class SoSim implements RoutingDecisionEngine {
 
     @Override
     public boolean isFinalDest(Message m, DTNHost aHost) {
-
         return m.getTo() == aHost;
     }
 
@@ -133,10 +132,11 @@ public class SoSim implements RoutingDecisionEngine {
 
             this.tanimoto = hitungtanimoto(thisHost, otherHost);
             if (Double.isNaN(this.tanimoto)) { //jk hasil tanimoto NaN maka akan diberikan nilai 0
-                this.tanimoto = 0;
+                this.tanimoto = 1;
+              
             }
-            System.out.println(thisHost + " >> " + otherHost); //cek node yg mana yg ditemui 
-            System.out.println(this.tanimoto); // hasil tanimoto
+//            System.out.println(thisHost + " >> " + otherHost); //cek node yg mana yg ditemui 
+    System.out.println(this.tanimoto); // hasil tanimoto
         }
 
         DecisionEngineRouter otherRouter = (DecisionEngineRouter) otherHost.getRouter();
