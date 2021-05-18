@@ -131,9 +131,9 @@ public class SoSim implements RoutingDecisionEngine {
         if (SimClock.getIntTime() >= 28500) { //setelah waktu warmup selesai
 
             this.tanimoto = hitungtanimoto(thisHost, otherHost);
+            
             if (Double.isNaN(this.tanimoto)) { //jk hasil tanimoto NaN maka akan diberikan nilai 0
-                this.tanimoto = 1;
-              
+                this.tanimoto = Math.random()*(1.0 - 0.1)+0.2;
             }
 //            System.out.println(thisHost + " >> " + otherHost); //cek node yg mana yg ditemui 
     System.out.println(this.tanimoto); // hasil tanimoto
@@ -218,7 +218,7 @@ public class SoSim implements RoutingDecisionEngine {
 //            return sim;
 
         }
-        return 0;
+        return 0.0;
 //        return ((double) dotProduct / (double) (magnitudeA + magnitudeB - dotProduct));
     }
 
