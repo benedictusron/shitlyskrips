@@ -45,6 +45,7 @@ public class SoSim implements RoutingDecisionEngine {
         if (SimClock.getTime() <= 28500) { //jk kurang dari 1728(warmup time)
             nodeditemui.add(peer); //  node yg ditemui akan dimasukin ke set
         }
+        
 //        System.out.println(nodeditemui);
 
         if (SimClock.getTime() > 28500 && vektorawal.isEmpty()) { //jk sudah lebih dari waktu warmpup dan vektor awal kosong
@@ -133,10 +134,10 @@ public class SoSim implements RoutingDecisionEngine {
             this.tanimoto = hitungtanimoto(thisHost, otherHost);
             
             if (Double.isNaN(this.tanimoto)) { //jk hasil tanimoto NaN maka akan diberikan nilai 0
-                this.tanimoto = Math.random()*(1.0 - 0.1)+0.2;
+                this.tanimoto = Math.random()*(1.0 - 0.1)+0.2; //random tanimoto karena NaN
             }
 //            System.out.println(thisHost + " >> " + otherHost); //cek node yg mana yg ditemui 
-    System.out.println(this.tanimoto); // hasil tanimoto
+ //   System.out.println(this.tanimoto); // hasil tanimoto
         }
 
         DecisionEngineRouter otherRouter = (DecisionEngineRouter) otherHost.getRouter();
